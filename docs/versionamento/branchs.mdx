@@ -1,0 +1,55 @@
+---
+sidebar_position: 1
+---
+
+# Branchs
+
+> Padrôes para branchs.
+
+<div class="alert alert--primary" role="alert">
+
+    - **Revisado em:** 19/06/2024:15:02
+ 
+ </div>
+ 
+---
+
+### Nomes
+
+Em meus projetos, costumo definir no nome das branchs, flags especificas para especificar as informações relacionadas a funcionalidade que está sendo trabalhada.
+
+> Também facilita na hora de pesquisar, filtrar ou gerar relatórios em ferramentas como `Jira` por exemplo.
+
+Costumo utilizar, o padrão `git flow`, que resumidamente é uma série de padrôes de criação de branchs e fluxos de lançamento de software.
+
+**Organizo os nomes da segunte forma**:
+
+- `feature/user/TASKID-taskname`
+
+**Exemplo:**
+ 
+ > `feature/matheus.gomes/POR12-documentando-padrao-de-branchs`
+
+****
+
+### Organização das branchs do projeto
+
+Costumo organizar as branchs do meu projeto separando em cada estagio de desenvolvimento ao qual o projeto se encontra.
+
+**Organizo as `branchs` da seguinte maneira:**
+
+- **`master`**: Responsável pelo código do projeto em seu estado atual de lançamento, é o projeto que está no ar e já foi publicado.
+- **`develop`**: Agrupa o código mais atualizado do sistema, é a branch que serve como base de criação de novas features, é apartir dela que todas as novas branchs são criadas pela equipe.  
+- **`type/user/TASKID-taskname`**: Branch de trabalho, responsável pelo desenvolvimento, correção, melhorias ou qualquer manutenção no código do projeto, possui diversos tipos que podem ser consultados na seção de tipos de branch. 
+- **`release/v1.x.x`**: Branch temporária, que só existe durante o processo de lançamento de uma nova release.
+
+****
+
+### Tipos de Branchs
+
+Costumo utilizar o padrão `git flow` na criação das minhas branchs, e as organizo da seguinte forma:
+
+- **`feature/`**: Utilizada para o desenvolvimento de novas funcionalidades..
+- **`bugfix/`**: Utilizada para correção de bugs, ajustes e outras tarefas relacionadas a manter o projeto que está sem `desenvolvimento`,.
+- **`hotfix/`**: Branch temporária, que só existe em casos que é necessário realizar uma correção grave no ambiente de `produção`, ela é excluida após ser lançada.
+- **`release/v1.x.x`**: Branch criada no momento de lançamento de uma nova versão do software, consulte a seção fluxos de lançamento.

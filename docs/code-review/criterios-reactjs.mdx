@@ -1,0 +1,378 @@
+---
+sidebar_position: 1
+---
+
+# React.js
+
+> Heurísticas que avalio em projetos [React.js](https://react.dev/)
+
+<div class="alert alert--primary" role="alert">
+
+   - **Versão**: React 18.3.1 
+   - **Revisado em:** 27/05/2024:11:23
+
+</div>
+
+---
+
+> **Nota**: Estas heurísticas se baseiam em minhas experiências, livros, e principalmente na leitura das recomendações oficiais do [React.js](https://react.dev/).
+
+---
+
+### Os nomes dos componentes React devem sempre começar com letra maiúscula, enquanto as tags HTML devem ser minúsculas.
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+   return (
+      <>
+         <Component>Os nomes dos componentes React devem sempre começar com letra maiúscula</Component>
+
+         <button>Tags HTML devem ser minúsculas</button>
+      </>
+   );
+};
+```
+
+### Utilizar Self Closing quando não possuir children.
+
+```js title="Exemplo"
+const Component: React.FC = () => <p>Utilizar Self Closing quando não possuir children.</p>;
+
+const Example: React.FC = () => <Component />;
+```
+
+### Prefira condicionais ternarias quando precisar escrever condicionais de Components.
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+   const [open, setOpen] = useState(false);
+
+   return <>{open ? "Open" : "Closed"}</>;
+};
+```
+
+### Quando não precisar do else, utilizar sintaxe lógica mais curta &&.
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+   const [isLoading, setIsLoading] = useState(false);
+
+   return <>{isLoading && "Carregando..."}</>;
+};
+```
+
+### Utilize .map() para listas.
+
+-  Para cada item de uma lista, você deve passar uma string ou um número que identifique **exclusivamente** (unico) aquele item entre seus irmãos. Normalmente, uma chave deve vir dos seus dados, como um ID do banco de dados.
+
+-  Em loops, você precisa especificar uma propriedade chave [key] para cada item da lista, para diferenciar cada item da lista de seus irmãos. Se seus dados fossem de um banco de dados, os IDs do banco de dados seriam utilizados, etc…
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+   const frutas = ["banana", "uva", "melancia"];
+
+   return (
+      <>
+         {frutas.map((fruta) => (
+            <p key={fruta}>{fruta}</p>
+         ))}
+      </>
+   );
+};
+```
+
+### Para nomes de estados, prefira a convenção de nomes [something, setSomething].
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+   const [something, setSomething] = useState("");
+
+   return <></>;
+};
+```
+
+### Quando precisar compartilhar o mesmo estado para varios componentes, eleve o estado através do design pattern, Container Presentational.
+
+- Quando você quiser coordenar dois componentes, mova seu estado para o pai comum.
+
+![Arvore de componentes react.js](https://react.dev/_next/image?url=%2Fimages%2Fdocs%2Fdiagrams%2Fgeneric_render_tree.png&w=640&q=75)
+
+```js title="Exemplo"
+type UserData = {
+   name: string,
+   email: string,
+   city: string,
+};
+
+interface PresentationalAProps {
+   userData: UserData;
+}
+
+const PresentationalA: React.FC<PresentationalAProps> = ({ userData }) => <p>name: {userData.name}</p>;
+
+interface PresentationalBProps {
+   userData: UserData;
+}
+
+const PresentationalB: React.FC<PresentationalBProps> = ({ userData }) => <p>email: {userData.email}</p>;
+
+interface PresentationalCProps {
+   userData: UserData;
+}
+
+const PresentationalC: React.FC<PresentationalCProps> = ({ userData }) => <p>city: {userData.city}</p>;
+
+const Container: React.FC = () => {
+   const userData: UserData = {
+      name: "Matheus",
+      email: "matheusgomes1203@hotmail.com",
+      city: "Praia Grande - SP",
+   };
+
+   return (
+      <>
+         <PresentationalA userData={userData} />
+         <PresentationalB userData={userData} />
+         <PresentationalC userData={userData} />
+      </>
+   );
+};
+```
+
+### Evite renderizações desnecessárias.
+
+-  Por padrão, todos os componentes filhos são renderizados novamente automaticamente quando o estado de um componente pai é alterado.
+-  Isso inclui até mesmo os componentes filhos que não foram afetados pela alteração.
+
+> **Nota**: em alguns casos utilize o hook `memo` para evitar re-renderizações.
+
+```js title="Exemplo"
+const ComponentFilho: React.FC = () => <>Filho</>;
+
+const ComponentFilhoMemoized: React.NamedExoticComponent<object> = memo(function ComponentFilhoMemoized() {
+   return <>Filho Memoized</>;
+});
+
+const ComponentPai: React.FC = () => {
+   const [state, setState] = useState(false);
+
+   return (
+      <>
+         <button onClick={() => setState(!state)}>Update State</button>
+         // Todos os componentes filhos serão re-renderizados a cada mudança no state.
+         <ComponentFilho />
+         <ComponentFilho />
+         // Este componente está memoizado, e não será re-renderizado na mudança do state, a não ser que ele possua prop
+         e ela mude.
+         <ComponentFilhoMemoized />
+      </>
+   );
+};
+```
+
+### Sempre tente evitar o estado redundante.
+
+```js title="Exemplo"
+// Exemplo redundante
+const RedundantExample: React.FC = () => {
+   const [firstName, setFirstName] = useState('');
+   const [lastName, setLastName] = useState('');
+
+   // Estado redundante
+   const [fullName, setFullName] = useState('');
+
+// Criou-se um estado desnecessario para armazenar o nome completo, isso causará uma nova renderização do componente desnecessariamente.
+   const handleFullName = () => {
+      setFullName(`${firstName ${lastName}}`);
+   }
+
+   return <>{fullName}</>
+}
+
+// Exemplo Correto
+const CorrectExample: React.FC = () => {
+   const [firstName, setFirstName] = useState('');
+   const [lastName, setLastName] = useState('');
+
+// Aqui, a cada nova renderização de firstName e lastName, o fullName será construido na fase de montagem, obtendo o mesmo resultado sem precisar re-renderizar o componente.
+   const fullName = `${firstName ${lastName}}`;
+
+   return <>{fullName}</>
+}
+
+```
+
+### Prefira inferencia de tipos nos estados.
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+   // Evite tipar determinados estados como este, o typescript infere o tipo automaticamente.
+   const [typedState, setTypedState] = useState<string>("");
+
+   // Deixe o compilador do typescript trabalhar para você através da inferencia de tipos: o typescript irá tipar este estado como string automaticamente.
+   const [inferedState, setInferedState] = useState("");
+
+   return <></>;
+};
+```
+
+### Utilize interface para props, e types para tipos especificos.
+
+```js title="Exemplo"
+type Color = "Azul" | "Verde";
+
+interface ExampleProps {
+   children: React.ReactNode;
+}
+
+const Example: React.FC<ExampleProps> = ({ children }) => {
+   const [color, setColor] = useState<Color >("Azul");
+
+   return <>{children}</>;
+};
+```
+
+### Nunca em hipotese alguma, utilize `<any>` type.
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+   const [state, setState] = useState<any>("qualquer coisa");
+
+   return <></>;
+};
+```
+
+### Quando não tiver valores default para o estado, utilize null como valor default.
+
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+   const [state, setState] = useState(null);
+
+   return <></>;
+};
+```
+
+### Utilize os hooks `useMemo` e `useCallback` para melhorias de performance.
+
+```js title="Exemplo"
+const ExampleMemo: React.NamedExoticComponent<object> = memo(function ComponentFilhoMemoized() {
+   return <>Memoized</>;
+});
+
+
+const Example: React.FC = () => {
+   const handleChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
+      console.log(event)   
+   }, []);
+
+   return <>
+             <ExampleMemo />
+          </>;
+};
+```
+
+### Adicione o tipo de Evento em funcões de formulário.
+
+> **Nota**: Se precisar usar um evento que não está incluido nesta lista, você pode usar o tipo `React.SyntheticEvent`, que é o tipo base para todos os eventos.
+
+```js title="Exemplo"
+const Example: React.FC = () => {
+
+   // Exemplo declarando tipo de evento.
+   const handleChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
+      console.log(event)   
+   }, []);
+
+   // Exemplo utilizando React.SyntheticEvent
+   const handleSyntChange = useCallback((event: React.SyntheticEvent) => {
+      console.log(event)   
+   }, []);
+
+   return <>
+             <input name="example" onChange={handleChange} />
+          </>;
+};
+```
+
+### Não coloque adereços no estado, a menos que você queira especificamente impedir atualizações.
+
+```js title="Exemplo"
+const Example: React.FC = ({initialColor}) => {
+   // Este estado só irá re-renderizar se o setColor for acionado.
+   const [color, setColor] = useState(initialColor);
+   return <></>;
+}
+```
+
+### Para padrôes de UI como seleção, mantenha o ID ou o indice no estado em vez do proprio objeto.
+
+- Você não precisa manter o item selecionado no estado, pois somente o ID selecionado é essencial.
+   - O resto pode ser calculado durante a renderização.
+- Crie uma função que busque o registro pelo ID, assim evitará duplicação estrutural do estado.
+- Mantenha o estado sempre plano, evite aninhamentos de objetos, utilize array de IDs e manipule via funções.
+- Se atualizar o estado profundamente aninhado for complicado, tente nivelá-lo.
+
+
+```js title="Exemplo"
+interface ExampleProps {
+   initialColor: Color[];
+}
+
+const Example: React.FC<ExampleProps> = ({initialColor}) => {
+   const [color, setColor] = useState(initialColor);
+   const [selectedID, setSelectedID] = useState([]);
+
+   // Crie uma função para selecionar o registro que você precisa
+   const getColor = useCallback((id: number): Color[] | undefined => ({
+       color.filter((color) => color.id === id)
+   }), [color]);
+   
+   return <>
+      <p>
+         <strong>ColorID</strong>: ${selectedID[0]}
+         <string>ColorName</string>: ${selectedID[0].name} 
+      </p>
+
+      // Evitar: isto armazenará o objeto color inteiro com props duplicadas assim: [{id: 0, name: 'yellow'}...]
+      {color.map((color) => <button onClick={() => setSelectedID((prev) => {[...prev, color]})}>Selecionar</button>)}
+
+      // Correto: com a mudança fica assim [0]
+      {color.map(({id}) => <button onClick={() => setSelectedID((prev) => {[...prev, id]})}>Selecionar</button>)}
+   </>;
+}
+```
+
+### Se você deseja atualizar algum estado com base no estado anterior, passe uma função de atualização.
+
+```js title="Exemplo"
+const Example: React.FC = ({initialColor}) => {
+   const [color, setColor] = useState(initialColor);
+
+   setColor((prevState) => ({...prevState, name: 'red'}));
+   
+   return <></>;
+}
+
+### No uso do Fragment, sempre que precisar de uma key, utilize explicitamente o Fragment.
+
+```js title="Exemplo"
+function Blog() {
+   return posts.map(post =>
+     <Fragment key={post.id}>
+       <PostTitle title={post.title} />
+       <PostBody body={post.body} />
+     </Fragment>
+   );
+}
+```
+
+### Utilize asserções de tipo se um estado for inicializado logo após a configuração e sempre tiver um valor default
+
+
+```js title="Exemplo"
+const [user, setUser] = useState<User>({} as User);
+
+   // later...
+   setUser(newUser);
+```

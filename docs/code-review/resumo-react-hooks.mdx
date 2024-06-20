@@ -1,0 +1,90 @@
+---
+sidebar_position: 3
+---
+
+# Resumo React Hooks
+
+> Breve resumo dos React Hooks
+
+<div class="alert alert--primary" role="alert">
+   - **Versão**: React 18.3.1 
+   - **Revisado em:** 18/05/2024:10:40
+</div>
+
+---
+
+### useActionState
+
+> Atualmente está disponível apenas de como experimental do React.
+
+- useActionStateé um Hook que permite atualizar o estado com base no resultado de uma ação de formulário.
+
+### useCallback
+
+- useCallback é um React Hook que permite armazenar em cache uma definição de função entre re-renderizações.
+
+### useContext
+
+- useContexté  um React Hook que permite ler e assinar o contexto do seu componente.
+- useContext retorna o valor de contexto do componente de chamada. É determinado como o valuepassado para o componente mais próximo SomeContext.
+   - Provideracima do componente de chamada na árvore. Se não existir tal provedor, o valor retornado será o que defaultValuevocê passou createContextpara esse contexto. 
+   - O valor retornado está sempre atualizado. 
+   - O React renderiza novamente automaticamente os componentes que leem algum contexto se ele mudar.
+
+### useDebugValue
+
+- useDebugValueé um React Hook que permite adicionar um rótulo a um Hook personalizado no React DevTools.
+
+### useDefferedValue
+
+- useDeferredValueé um React Hook que permite adiar a atualização de uma parte da IU.
+
+### useEffect
+
+- useEffect é um React Hook que permite sincronizar um componente com um sistema externo.
+
+### useId
+
+- useId é um Hook do React para gerar IDs únicos que podem ser passados para atributos de acessibilidade.
+
+### useImperativeHandle
+
+- useImperativeHandle é um React Hook que permite customizar o identificador exposto como ref.
+
+### useInsertionEffect
+
+- useInsertionEffect permite inserir elementos no DOM antes de qualquer efeito de layout ser acionado.
+
+### useLayoutEffect
+
+- useLayoutEffecté uma versão que useEffecté acionada antes que o navegador redesenhe a tela.
+
+### useMemo
+
+- useMemo é um React Hook que permite armazenar em cache o resultado de um cálculo entre re-renderizações.
+
+### useOptimistic
+
+> Atualmente está disponível apenas de como experimental do React.
+
+- useOptimistic é um React Hook que permite atualizar a IU de maneira otimista.
+
+### useReducer
+
+- useReducer é um React Hook que permite adicionar um redutor ao seu componente.
+
+### useRef
+
+- useRef é um React Hook que permite referenciar um valor que não é necessário para renderização.
+
+### useState
+
+- useState é um React Hook que permite adicionar uma variável de estado ao seu componente.
+
+### useSyncExternalStore
+
+- useSyncExternalStore é um React Hook que permite assinar uma loja externa, um valor de um armazenamento de dados externo
+
+### useTransition
+
+- useTransition é um Hook do React que permite você atualizar o state (estado) sem bloquear a UI.
