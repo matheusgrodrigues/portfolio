@@ -52,6 +52,16 @@ const config: Config = {
                     position: 'right',
                     href: '/docs/visao-geral',
                 },
+                {
+                    label: 'Github',
+                    position: 'right',
+                    href: 'https://github.com/matheusgrodrigues',
+                },
+                {
+                    label: 'Linkedin',
+                    position: 'right',
+                    href: 'https://www.linkedin.com/in/matheusgomes/',
+                },
             ],
         },
         footer: {
