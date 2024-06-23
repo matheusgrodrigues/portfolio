@@ -3,7 +3,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-    title: 'MatheusGomesDev',
+    title: 'Matheus Gomes',
     tagline: 'Programador Frontend apaixonado por criação de interfaces inovadoras.',
     favicon: 'img/foto.jpeg',
     url: 'https://matheusgomesdev.com.br/',
@@ -41,26 +41,16 @@ const config: Config = {
             defaultMode: 'dark',
         },
         navbar: {
-            title: 'GomesDev',
             logo: {
                 alt: 'GomesDev',
                 src: 'img/foto.jpeg',
+                className: 'rounded-full',
             },
             items: [
                 {
-                    label: 'Visão Geral',
+                    label: 'Processos',
                     position: 'right',
                     href: '/docs/visao-geral',
-                },
-                {
-                    label: 'Code Review',
-                    position: 'right',
-                    href: '/docs/category/code-review',
-                },
-                {
-                    label: 'Versionamento',
-                    position: 'right',
-                    href: '/docs/category/versionamento',
                 },
             ],
         },
