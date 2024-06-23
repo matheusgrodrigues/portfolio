@@ -20,20 +20,18 @@ const ButtonLink: React.FC<ButtonLink> = ({ children, to }) => (
 
 interface AvatarProps extends React.DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {}
 
-const Avatar: React.FC<AvatarProps> = ({ ...props }) => {
-    return (
-        <div className="">
-            <img {...props} />
-        </div>
-    );
-};
+const Avatar: React.FC<AvatarProps> = ({ ...props }) => (
+    <div className="overflow-hidden border-slate-200 border-solid rounded-full bg-slate-400 border-2 w-20 h-20">
+        <img className="w-full h-full" {...props} />
+    </div>
+);
 
 export default function Home(): React.ReactElement {
     const { siteConfig } = useDocusaurusContext();
 
     return (
         <Layout description="Descrição dos meus processos de trabalho" title={siteConfig.title}>
-            <Avatar />
+            <Avatar src="/img/foto.jpeg" />
         </Layout>
     );
 }
