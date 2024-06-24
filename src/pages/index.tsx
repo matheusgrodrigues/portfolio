@@ -13,6 +13,7 @@ import InputTextarea from './components/input/InputTextarea';
 import InputTelefone from './components/input/InputTelefone';
 import InputText from './components/input/InputText';
 import Button from './components/button/Button';
+import EmailService from '../services/EmailService';
 
 const schema = z.object({
     mensagem: z.string().min(1, { message: 'Mensagem é um campo obrigatório' }),
@@ -33,7 +34,13 @@ interface ModalContatoProps {
 }
 
 const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
-    const handleSubmit = (data: ModalContatoFields) => console.log(data);
+    const handleSubmit = async (data: ModalContatoFields) => {
+        try {
+            await EmailService.sendEmail(data);
+
+            console.log('foi');
+        } catch (error) {}
+    };
 
     return (
         <BaseModal ref={baseModalRef}>
@@ -48,7 +55,7 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
                     onSubmit={handleSubmit}
                 >
                     <BaseField render={<InputText label="Nome" />} name="nome" />
-                    <BaseField render={<InputText label="E-mail" />} name="email" />
+                    <BaseField render={<InputText label="E-mail" />} type="email" name="email" />
                     <BaseField render={<InputTelefone label="Telefone" />} name="telefone" />
                     <BaseField render={<InputTextarea label="Mensagem" />} name="mensagem" />
 
