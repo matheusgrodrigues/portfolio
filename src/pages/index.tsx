@@ -19,7 +19,7 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
         <BaseModal ref={baseModalRef}>
             <section className="container items-center flex-col flex mb-40">
                 <h5 className="text-purple-900">Contato</h5>
-                <h1>Entrar em Contato</h1>
+                <h1 className="dark:text-white">Entrar em Contato</h1>
                 <p>Entrearei em contato com você ainda hoje!</p>
 
                 <form className="max-w-lg flex-col w-full flex gap-6 mt-4">
@@ -27,6 +27,14 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
                     <InputText label="E-mail" name="email" />
                     <InputTelefone label="Telefone" name="telefone" />
                     <InputTextarea label="Mensagem" name="mensagem" />
+
+                    <div className="flex gap-2">
+                        <input type="checkbox" className="default:ring-2 w-8" id="manter_informado" />
+                        <label htmlFor="manter_informado" className="text-gray-900 dark:text-white">
+                            Gostaria de estar atualizado sobre os próximos projetos e receber informações a respeito.
+                        </label>
+                    </div>
+
                     <Button variant="gradient-purple">Enviar mensagem</Button>
                 </form>
             </section>
