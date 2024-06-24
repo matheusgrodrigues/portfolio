@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import React, { useImperativeHandle, useCallback, forwardRef, useState } from 'react';
 
 import Button from '../button/Button';
 
@@ -22,12 +22,10 @@ const BaseModal: React.ForwardRefRenderFunction<BaseModalRef, BaseModalProps> = 
         <>
             {open && (
                 <div
-                    className={`bg-gray-600 w-screen h-screen absolute flex-col flex top-0 left-0 gap-8 px-8 ${open ? 'z-[9999]' : '-z-50'}`}
+                    className={`bg-gray-600 w-screen min-h-screen max-w-[99vw] absolute overflow-y-auto flex-col flex top-0 left-0 gap-8 px-8 ${open ? 'z-[9999]' : '-z-50'}`}
                 >
                     <header className="justify-end w-full flex pt-8">
-                        <Button className="font-bold text-lg" onClick={handleClose}>
-                            X
-                        </Button>
+                        <Button onClick={handleClose}>X</Button>
                     </header>
                     <div className="container">{children}</div>
                 </div>

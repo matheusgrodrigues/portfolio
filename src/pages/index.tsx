@@ -1,10 +1,13 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
 import BaseModal, { BaseModalRef } from './components/base/BaseModal';
+import InputTextarea from './components/input/InputTextarea';
+import InputTelefone from './components/input/InputTelefone';
+import InputText from './components/input/InputText';
 import Button from './components/button/Button';
 
 interface ModalContatoProps {
@@ -12,7 +15,23 @@ interface ModalContatoProps {
 }
 
 const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
-    return <BaseModal ref={baseModalRef}>ModalContato</BaseModal>;
+    return (
+        <BaseModal ref={baseModalRef}>
+            <section className="container items-center flex-col flex mb-40">
+                <h5 className="text-purple-900">Contato</h5>
+                <h1>Entrar em Contato</h1>
+                <p>Entrearei em contato com você ainda hoje!</p>
+
+                <form className="max-w-lg flex-col w-full flex gap-6 mt-4">
+                    <InputText label="Nome" name="nome" />
+                    <InputText label="E-mail" name="email" />
+                    <InputTelefone label="Telefone" name="telefone" />
+                    <InputTextarea label="Mensagem" name="mensagem" />
+                    <Button variant="gradient-purple">Enviar mensagem</Button>
+                </form>
+            </section>
+        </BaseModal>
+    );
 };
 
 export default function Home(): React.ReactElement {
@@ -36,6 +55,7 @@ export default function Home(): React.ReactElement {
         document.body.removeChild(link);
     }, []);
 
+    useEffect(() => modalContatoRef.current.handleOpen(), []);
     return (
         <Layout description="Descrição dos meus processos de trabalho" title={siteConfig.title}>
             <section className="max-w-2xl container items-center flex-col flex mt-10 lg:mt-16">
