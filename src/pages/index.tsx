@@ -4,17 +4,37 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
+import { z } from 'zod';
+
+import BaseField from './components/base/BaseField';
+import BaseForm from './components/base/BaseForm';
 import BaseModal, { BaseModalRef } from './components/base/BaseModal';
 import InputTextarea from './components/input/InputTextarea';
 import InputTelefone from './components/input/InputTelefone';
 import InputText from './components/input/InputText';
 import Button from './components/button/Button';
 
+const schema = z.object({
+    mensagem: z.string().min(1, { message: 'Mensagem é um campo obrigatório' }),
+    telefone: z.string().min(1, { message: 'Telefone é um campo obritaório' }),
+    email: z.string().min(1, { message: 'Email é um campo obrigatório' }),
+    nome: z.string().min(1, { message: 'Nome é um campo obrigatório' }),
+});
+
+interface ModalContatoFields {
+    mensagem: string;
+    telefone: string;
+    email: string;
+    nome: string;
+}
+
 interface ModalContatoProps {
     baseModalRef: React.RefObject<BaseModalRef>;
 }
 
 const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
+    const handleSubmit = (data: ModalContatoFields) => console.log(data);
+
     return (
         <BaseModal ref={baseModalRef}>
             <section className="container items-center flex-col flex mb-40">
@@ -22,11 +42,15 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
                 <h1 className="dark:text-white">Entrar em Contato</h1>
                 <p>Entrearei em contato com você ainda hoje!</p>
 
-                <form className="max-w-lg flex-col w-full flex gap-6 mt-4">
-                    <InputText label="Nome" name="nome" />
-                    <InputText label="E-mail" name="email" />
-                    <InputTelefone label="Telefone" name="telefone" />
-                    <InputTextarea label="Mensagem" name="mensagem" />
+                <BaseForm
+                    validationSchema={schema}
+                    className="max-w-lg flex-col w-full flex gap-6 mt-4"
+                    onSubmit={handleSubmit}
+                >
+                    <BaseField render={<InputText label="Nome" />} name="nome" />
+                    <BaseField render={<InputText label="E-mail" />} name="email" />
+                    <BaseField render={<InputTelefone label="Telefone" />} name="telefone" />
+                    <BaseField render={<InputTextarea label="Mensagem" />} name="mensagem" />
 
                     <div className="flex gap-2">
                         <input type="checkbox" className="default:ring-2 w-8" id="manter_informado" />
@@ -36,7 +60,7 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
                     </div>
 
                     <Button variant="gradient-purple">Enviar mensagem</Button>
-                </form>
+                </BaseForm>
             </section>
         </BaseModal>
     );

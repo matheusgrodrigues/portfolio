@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes } from 'react';
 
 interface InputTextProps extends React.DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
-    name: string;
+    name?: string;
     label?: string;
 }
 

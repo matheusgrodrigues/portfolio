@@ -2,7 +2,7 @@ import React, { TextareaHTMLAttributes } from 'react';
 
 interface InputTextareaProps
     extends React.DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
-    name: string;
+    name?: string;
     label?: string;
 }
 
