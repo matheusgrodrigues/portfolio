@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { InputHTMLAttributes, useCallback, useEffect, useRef } from 'react';
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -15,15 +15,18 @@ import InputText from './components/input/InputText';
 import Button from './components/button/Button';
 
 import EmailService from '../services/EmailService';
+import Checkbox from './components/input/InputCheckbox';
 
 const schema = z.object({
     mensagem: z.string().min(1, { message: 'Mensagem é um campo obrigatório' }),
-    telefone: z.string().min(1, { message: 'Telefone é um campo obritaório' }),
+    telefone: z.string().min(1, { message: 'Telefone é um campo obrigatório' }),
     email: z.string().min(1, { message: 'Email é um campo obrigatório' }),
     nome: z.string().min(1, { message: 'Nome é um campo obrigatório' }),
+    manter_informado: z.unknown(),
 });
 
 interface ModalContatoFields {
+    receber_informacoes: boolean;
     mensagem: string;
     telefone: string;
     email: string;
@@ -37,9 +40,7 @@ interface ModalContatoProps {
 const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
     const handleSubmit = async (data: ModalContatoFields) => {
         try {
-            await EmailService.sendEmail(data);
-
-            console.log('foi');
+            await EmailService.sendContact(data);
         } catch (error) {}
     };
 
@@ -60,12 +61,12 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
                     <BaseField render={<InputTelefone label="Telefone" />} name="telefone" />
                     <BaseField render={<InputTextarea label="Mensagem" />} name="mensagem" />
 
-                    <div className="flex gap-2">
-                        <input type="checkbox" className="default:ring-2 w-8" id="manter_informado" />
-                        <label htmlFor="manter_informado" className="text-gray-900 dark:text-white">
-                            Gostaria de estar atualizado sobre os próximos projetos e receber informações a respeito.
-                        </label>
-                    </div>
+                    <BaseField
+                        render={
+                            <Checkbox label="Gostaria de estar atualizado sobre os próximos projetos e receber informações a respeito." />
+                        }
+                        name="manter_informado"
+                    />
 
                     <Button variant="gradient-purple">Enviar mensagem</Button>
                 </BaseForm>
