@@ -4,18 +4,26 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
+import { z } from 'zod';
+
 import BaseField from './components/base/BaseField';
 import BaseForm from './components/base/BaseForm';
 import BaseModal, { BaseModalRef } from './components/base/BaseModal';
+import InputCheckbox from './components/input/InputCheckbox';
 import InputTextarea from './components/input/InputTextarea';
 import InputTelefone from './components/input/InputTelefone';
 import InputText from './components/input/InputText';
 import Button, { ButtonRef } from './components/button/Button';
 
 import EmailService from '../services/EmailService';
-import Checkbox from './components/input/InputCheckbox';
 
-import formContactRules from './rules';
+const formContactRules = z.object({
+    mensagem: z.string().min(1, { message: 'Mensagem é um campo obrigatório' }),
+    telefone: z.string().min(1, { message: 'Telefone é um campo obrigatório' }),
+    email: z.string().min(1, { message: 'Email é um campo obrigatório' }),
+    nome: z.string().min(1, { message: 'Nome é um campo obrigatório' }),
+    manter_informado: z.unknown(),
+});
 
 interface ModalContatoFields {
     receber_informacoes: boolean;
@@ -62,7 +70,7 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
 
                     <BaseField
                         render={
-                            <Checkbox label="Gostaria de estar atualizado sobre os próximos projetos e receber informações a respeito." />
+                            <InputCheckbox label="Gostaria de estar atualizado sobre os próximos projetos e receber informações a respeito." />
                         }
                         name="manter_informado"
                     />
