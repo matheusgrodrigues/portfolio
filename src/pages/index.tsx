@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -9,21 +9,24 @@ import { z } from 'zod';
 import BaseField from './components/base/BaseField';
 import BaseForm from './components/base/BaseForm';
 import BaseModal, { BaseModalRef } from './components/base/BaseModal';
+import InputCheckbox from './components/input/InputCheckbox';
 import InputTextarea from './components/input/InputTextarea';
 import InputTelefone from './components/input/InputTelefone';
 import InputText from './components/input/InputText';
-import Button from './components/button/Button';
+import Button, { ButtonRef } from './components/button/Button';
 
 import EmailService from '../services/EmailService';
 
-const schema = z.object({
+const formContactRules = z.object({
     mensagem: z.string().min(1, { message: 'Mensagem é um campo obrigatório' }),
-    telefone: z.string().min(1, { message: 'Telefone é um campo obritaório' }),
+    telefone: z.string().min(1, { message: 'Telefone é um campo obrigatório' }),
     email: z.string().min(1, { message: 'Email é um campo obrigatório' }),
     nome: z.string().min(1, { message: 'Nome é um campo obrigatório' }),
+    manter_informado: z.unknown(),
 });
 
 interface ModalContatoFields {
+    receber_informacoes: boolean;
     mensagem: string;
     telefone: string;
     email: string;
@@ -35,12 +38,17 @@ interface ModalContatoProps {
 }
 
 const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
-    const handleSubmit = async (data: ModalContatoFields) => {
-        try {
-            await EmailService.sendEmail(data);
+    const submitButtonRef = useRef<ButtonRef>(null);
 
-            console.log('foi');
-        } catch (error) {}
+    const handleSubmit = async (data: ModalContatoFields) => {
+        submitButtonRef.current.setLoading(true);
+
+        try {
+            await EmailService.sendContact(data);
+            submitButtonRef.current.setLoading(false);
+        } catch (error) {
+            submitButtonRef.current.setLoading(false);
+        }
     };
 
     return (
@@ -48,10 +56,10 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
             <section className="container items-center flex-col flex mb-40">
                 <h5 className="text-purple-900">Contato</h5>
                 <h1 className="dark:text-white">Entrar em Contato</h1>
-                <p>Entrearei em contato com você ainda hoje!</p>
+                <p>Entrarei em contato com você ainda hoje!</p>
 
                 <BaseForm
-                    validationSchema={schema}
+                    validationSchema={formContactRules}
                     className="max-w-lg flex-col w-full flex gap-6 mt-4"
                     onSubmit={handleSubmit}
                 >
@@ -60,14 +68,16 @@ const ModalContato: React.FC<ModalContatoProps> = ({ baseModalRef }) => {
                     <BaseField render={<InputTelefone label="Telefone" />} name="telefone" />
                     <BaseField render={<InputTextarea label="Mensagem" />} name="mensagem" />
 
-                    <div className="flex gap-2">
-                        <input type="checkbox" className="default:ring-2 w-8" id="manter_informado" />
-                        <label htmlFor="manter_informado" className="text-gray-900 dark:text-white">
-                            Gostaria de estar atualizado sobre os próximos projetos e receber informações a respeito.
-                        </label>
-                    </div>
+                    <BaseField
+                        render={
+                            <InputCheckbox label="Gostaria de estar atualizado sobre os próximos projetos e receber informações a respeito." />
+                        }
+                        name="manter_informado"
+                    />
 
-                    <Button variant="gradient-purple">Enviar mensagem</Button>
+                    <Button variant="gradient-purple" ref={submitButtonRef}>
+                        Enviar mensagem
+                    </Button>
                 </BaseForm>
             </section>
         </BaseModal>
@@ -95,7 +105,6 @@ export default function Home(): React.ReactElement {
         document.body.removeChild(link);
     }, []);
 
-    useEffect(() => modalContatoRef.current.handleOpen(), []);
     return (
         <Layout description="Descrição dos meus processos de trabalho" title={siteConfig.title}>
             <section className="max-w-2xl container items-center flex-col flex mt-10 lg:mt-16">

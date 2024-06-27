@@ -6,7 +6,7 @@ import { ZodObject } from 'zod';
 interface BaseFormProps extends React.DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {
     validationSchema: ZodObject<FieldValues>;
     children: React.ReactNode;
-    onSubmit: SubmitHandler<unknown>;
+    onSubmit: SubmitHandler<FieldValues>;
 }
 
 const BaseForm: React.FC<BaseFormProps> = ({ validationSchema, children, onSubmit, ...props }) => {

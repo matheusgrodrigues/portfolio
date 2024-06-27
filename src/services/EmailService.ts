@@ -1,16 +1,16 @@
-import axios from 'axios';
-
 import { EmailBodySchema } from '../schemas/EmailSchema';
 
 const apiUrl = 'https://matheusgomesdev.com.br';
 
 const EmailService = {
-    sendEmail: async (data: EmailBodySchema) => {
-        const req = await axios.post(`${apiUrl}/api/send/route`, {
-            ...data,
+    sendContact: async (data: EmailBodySchema) => {
+        const req = await fetch(`${apiUrl}/api/send/route`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            mode: 'no-cors',
         });
 
-        return req.data;
+        return req.body;
     },
 };
 
