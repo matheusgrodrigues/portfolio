@@ -6,14 +6,14 @@ import Link from '@docusaurus/Link';
 
 import { z } from 'zod';
 
-import BaseField from './components/base/BaseField';
-import BaseForm from './components/base/BaseForm';
-import BaseModal, { BaseModalRef } from './components/base/BaseModal';
-import InputCheckbox from './components/input/InputCheckbox';
-import InputTextarea from './components/input/InputTextarea';
-import InputTelefone from './components/input/InputTelefone';
-import InputText from './components/input/InputText';
-import Button, { ButtonRef } from './components/button/Button';
+import BaseField from './components/Base/BaseField';
+import BaseForm from './components/Base/BaseForm';
+import BaseModal, { BaseModalRef } from './components/Base/BaseModal';
+import InputCheckbox from './components/Input/InputCheckbox';
+import InputTextarea from './components/Input/InputTextarea';
+import InputTelefone from './components/Input/InputTelefone';
+import InputText from './components/Input/InputText';
+import Button, { ButtonRef } from './components/Button/Button';
 
 import EmailService from '../services/EmailService';
 
