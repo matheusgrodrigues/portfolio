@@ -112,7 +112,7 @@ export default function Home(): React.ReactElement {
 
     return (
         <Layout description="Descrição dos meus processos de trabalho" title={siteConfig.title}>
-            <section className="max-w-[42rem] container items-center flex-col flex mt-10 lg:mt-16">
+            <section className="container max-w-2xl items-center flex-col flex mt-10 lg:mt-16">
                 <div className="items-center flex-col size-max flex gap-3">
                     <div className="overflow-hidden border-slate-200 border-solid rounded-full bg-slate-400 border-3 w-20 h-20">
                         <img className="w-full h-full" src="/img/foto.jpeg" alt={`${siteConfig.tagline}`} />
@@ -126,20 +126,15 @@ export default function Home(): React.ReactElement {
                 </h1>
 
                 <p className="text-center text-md1 my-8">
-                    Visite meu perfil no Linkedin e explore meus projetos no GitHub para descobrir como minhas
-                    habilidades podem agregar valor á sua equipe.
+                    Desenvolvedor Frontend com mais de 6 anos de experiência, criativo e especializado em
+                    Javascript/Typescript, ReactJS/Next.JS. Tenho ampla experiência em testes automatizados, criação de
+                    componentes reutilizáveis, TDD, DDD, Clean Code e Clean Architecture. Adepto das metodologias ágeis,
+                    desenvolvo soluções eficazes e simplificadas para a resolução de problemas complexos.
                 </p>
 
-                <Link className={'text-center'} to={'/docs/visao-geral'}>
-                    <p className="text-purple-900">
-                        Saiba mais sobre as minhas técnicas e processos que utilizo no dia a dia.
-                    </p>
-                </Link>
-
                 <div className="gap-4 flex mt-4">
-                    <Button onClick={handleDownloadCV}>Download CV</Button>
-                    <Button onClick={() => modalContatoRef.current.handleOpen()} variant="gradient-purple">
-                        Entre em Contato
+                    <Button onClick={handleDownloadCV} variant="gradient-purple">
+                        Download CV
                     </Button>
                 </div>
             </section>
