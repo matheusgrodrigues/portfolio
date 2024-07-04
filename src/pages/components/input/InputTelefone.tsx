@@ -1,6 +1,8 @@
-import React, { InputHTMLAttributes } from 'react';
+import React from 'react';
 
-interface InputTelefoneProps extends React.DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+import InputMask, { Props } from 'react-input-mask';
+
+interface InputTelefoneProps extends Omit<Props, 'mask'> {
     name?: string;
     label?: string;
 }
@@ -13,8 +15,9 @@ const InputTelefone: React.FC<InputTelefoneProps> = ({ label, name, id, ...props
                     {label}
                 </label>
             )}
-            <input
+            <InputMask
                 className="bg-white text-gray-900 border-none w-full rounded-lg px-3 h-11"
+                mask="(99) 99999-9999"
                 type="text"
                 name={name}
                 id={id ?? name}
