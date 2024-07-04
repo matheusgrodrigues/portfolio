@@ -20,7 +20,12 @@ import EmailService from '../services/EmailService';
 const formContactRules = z.object({
     mensagem: z.string().min(1, { message: 'Mensagem é um campo obrigatório' }),
     telefone: z.string().min(1, { message: 'Telefone é um campo obrigatório' }),
-    email: z.string().min(1, { message: 'Email é um campo obrigatório' }),
+    email: z
+        .string()
+        .min(1, { message: 'Email é um campo obrigatório' })
+        .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+            message: 'E-mail invalido!',
+        }),
     nome: z.string().min(1, { message: 'Nome é um campo obrigatório' }),
     manter_informado: z.unknown(),
 });
@@ -107,7 +112,7 @@ export default function Home(): React.ReactElement {
 
     return (
         <Layout description="Descrição dos meus processos de trabalho" title={siteConfig.title}>
-            <section className="max-w-2xl container items-center flex-col flex mt-10 lg:mt-16">
+            <section className="max-w-[42rem] container items-center flex-col flex mt-10 lg:mt-16">
                 <div className="items-center flex-col size-max flex gap-3">
                     <div className="overflow-hidden border-slate-200 border-solid rounded-full bg-slate-400 border-3 w-20 h-20">
                         <img className="w-full h-full" src="/img/foto.jpeg" alt={`${siteConfig.tagline}`} />
