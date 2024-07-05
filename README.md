@@ -16,10 +16,9 @@ Meu portfólio pessoal, é o ponto de partida para explorar meu perfil profissio
 
 ## Screenshots
 
-| Light                                                                                                                                                                   | Dark                                                                                                                                                                   |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![desktop-light](/static/img/readme/screen-light.png)                                                                                                                   | ![desktop-dark](/static//img/readme/screen-dark.png)                                                                                                                   |
-| [Visualize o Layout Light no Figma](https://www.figma.com/file/WZ6hE95sDBZxWX6X6S5sB7/Portfolio-Matheus?type=design&node-id=6533-2814&mode=design&t=NdNn7XX9xlAZmckL-4) | [Visualize o Layout Dark no Figma](https://www.figma.com/file/WZ6hE95sDBZxWX6X6S5sB7/Portfolio-Matheus?type=design&node-id=6533-2792&mode=design&t=NdNn7XX9xlAZmckL-4) |
+| Light                                                 | Dark                                                 |
+| ----------------------------------------------------- | ---------------------------------------------------- |
+| ![desktop-light](/static/img/readme/screen-light.png) | ![desktop-dark](/static//img/readme/screen-dark.png) |
 
 ## Tecnologias Utilizadas
 
