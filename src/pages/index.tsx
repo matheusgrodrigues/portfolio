@@ -41,9 +41,10 @@ export default function Home(): React.ReactElement {
 
                 <p className="max-w-2xl text-center text-md1 my-8">
                     Com mais de <span className="text-purple-300">6 anos de experiência</span>, criativo e especializado
-                    em Javascript/Typescript, ReactJS/Next.JS. Tenho ampla experiência em testes automatizados, criação
-                    de componentes reutilizáveis, TDD, DDD, Clean Code e Clean Architecture. Adepto das metodologias
-                    ágeis, desenvolvo soluções eficazes e simplificadas para a resolução de problemas complexos.
+                    em Javascript/Typescript, ReactJS/Next.JS. Tenho ampla experiência em criação de componentes
+                    reutilizáveis, TDD, DDD, Clean Code, Clean Architecture e testes automatizados. Adepto das
+                    metodologias ágeis, desenvolvo soluções eficazes e simplificadas para a resolução de problemas
+                    complexos.
                 </p>
 
                 <div className="gap-4 flex mt-4">
