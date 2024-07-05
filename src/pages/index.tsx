@@ -26,7 +26,7 @@ export default function Home(): React.ReactElement {
 
     return (
         <Layout description="Descrição dos meus processos de trabalho" title={siteConfig.title}>
-            <section className="container max-w-2xl items-center flex-col flex mt-10 lg:mt-16">
+            <section className="container items-center flex-col flex mt-10 lg:mt-16">
                 <div className="items-center flex-col size-max flex gap-3">
                     <div className="overflow-hidden border-slate-200 border-solid rounded-full bg-slate-400 border-3 w-20 h-20">
                         <img className="w-full h-full" src="/img/foto.jpeg" alt={`${siteConfig.tagline}`} />
@@ -34,12 +34,12 @@ export default function Home(): React.ReactElement {
                     <p className="text-sm">{siteConfig.title}</p>
                 </div>
 
-                <h1 className="text-center text-lg2 m-0">
+                <h1 className="max-w-2xl text-center text-lg2 m-0">
                     <span className="text-purple-900 block">Programador Frontend</span> apaixonado por criação de
                     interfaces inovadoras
                 </h1>
 
-                <p className="text-center text-md1 my-8">
+                <p className="max-w-2xl text-center text-md1 my-8">
                     Com mais de <span className="text-purple-300">6 anos de experiência</span>, criativo e especializado
                     em Javascript/Typescript, ReactJS/Next.JS. Tenho ampla experiência em testes automatizados, criação
                     de componentes reutilizáveis, TDD, DDD, Clean Code e Clean Architecture. Adepto das metodologias
