@@ -47,11 +47,12 @@ const config: Config = {
                 className: 'rounded-full',
             },
             items: [
-                {
+                /* {
                     label: 'Processos',
                     position: 'right',
                     href: '/docs/visao-geral',
-                },
+                }, */
+
                 {
                     label: 'Github',
                     position: 'right',
